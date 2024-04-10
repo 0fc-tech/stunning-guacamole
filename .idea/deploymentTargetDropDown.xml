@@ -8,6 +8,12 @@
       <entry key="mod3compose">
         <State />
       </entry>
+      <entry key="mod4statevm">
+        <State />
+      </entry>
+      <entry key="mod4trainsearcher">
+        <State />
+      </entry>
     </value>
   </component>
 </project>
