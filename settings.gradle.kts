@@ -22,3 +22,5 @@ dependencyResolutionManagement {
 rootProject.name = "TP"
 include(":app")
 include(":mod2seriefilm")
+include(":mod2bibliotheque")
+include(":mod3compose")
