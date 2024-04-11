@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun RechercheTrajet(vm : TrajetViewModel = viewModel()) {
     var fieldTrajet by remember { mutableStateOf("") }
-    val state = vm.stateTrajet
+
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         TextField(
             value = fieldTrajet,
@@ -57,10 +57,10 @@ fun RechercheTrajet(vm : TrajetViewModel = viewModel()) {
         Button(onClick = {vm.rechercher(fieldTrajet) }) {
             Text("RECHERCHER")
         }
-        when(state/*.value*/){
+        when(vm.stateTrajet/*.value*/){
             is TrajetState.PasDeTrajetTrouve -> Text("Pas de trajet trouvé")
             is TrajetState.TrajetTrouve ->
-                Text("${(state/*.value*/ as TrajetState.TrajetTrouve).listeTrajetTrouve}")
+                Text("${(vm.stateTrajet/*.value*/ as TrajetState.TrajetTrouve).listeTrajetTrouve}")
             is TrajetState.Init -> Text ("Recherchez votre trajet ci dessus")
         }
     }
