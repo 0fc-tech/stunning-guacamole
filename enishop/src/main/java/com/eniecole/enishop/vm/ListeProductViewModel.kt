@@ -19,7 +19,11 @@ class ListeProductViewModel : ViewModel() {
         //_stateProduct.value = RepositoryProducts.findById(id)
         stateProducts = RepositoryProducts.getAll()
     }
+    //Filtrer la liste de produit grâce à une catégorier
     fun filter(filter : String){
+        //On récupère la liste de produits depuis le Repo et on filtre la liste avec
+        //la catégorie passée par l'UI
+        //On modifie ensuite l'état de stateProducts -> Recomposition UI
         stateProducts = RepositoryProducts
             .getAll()
             .filter { it.categorie == filter }

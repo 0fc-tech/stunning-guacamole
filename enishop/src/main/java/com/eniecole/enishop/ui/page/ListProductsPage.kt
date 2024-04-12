@@ -43,6 +43,7 @@ fun ListProductsPage(
     onClickProduct : (product: Product)->Unit,
     vm : ListeProductViewModel = viewModel()
 ) {
+    //On sauvegarde la choix de catégorie de l'utilisateur (permet la surbrillance de la Chip)
     var stateSelectedCategory by remember{mutableStateOf<String?>(null)}
     Scaffold(
         topBar = {
@@ -59,10 +60,15 @@ fun ListProductsPage(
     ) { innerPadding->
         Column(Modifier.padding(innerPadding)) {
             LazyRow{
+                //On affiche une Filter Chip par catégorie dans une LazyRow (liste scrollable horiztonale)
                 items(categories){category->
+                    //Pour savoir si le Chip est sélectionné on compare la catégory en cours d'affichage avec
+                    //l'état de catégorie sélectionnée
                     FilterChip(selected = stateSelectedCategory == category,
                         onClick = {
+                            //On Change la catégorie sélectionnée par ce que l'utilisateur a sélectionné
                             stateSelectedCategory = category
+                            //On demande au viewModel de changer la liste avec la catégorie sélectionnée par l'utilisateur
                             vm.filter(category)
                         },
                         label = { Text(category) })
@@ -72,6 +78,7 @@ fun ListProductsPage(
                 columns = GridCells.Adaptive(128.dp),
                 Modifier.weight(1f),
             ){
+                //On affichage la liste de produit depuis l'état du ViewModel (State<List<Product>>)
                 items(vm.stateProducts){product->
                     Column(Modifier.clickable { onClickProduct(product) }) {
                         Card(
