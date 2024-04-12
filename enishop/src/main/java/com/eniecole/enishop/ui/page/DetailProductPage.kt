@@ -1,4 +1,4 @@
-package com.eniecole.enishop
+package com.eniecole.enishop.ui.page
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,26 +9,34 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.eniecole.enishop.ui.theme.Typography
+import com.eniecole.enishop.vm.DetailProductViewModel
 
 @Composable
-fun DetailProductPage(productId : Long,modifier: Modifier = Modifier) {
-    LazyColumn(modifier.fillMaxWidth()) {
+fun DetailProductPage(productId : Long,
+                      modifier: Modifier = Modifier,
+                      vm : DetailProductViewModel = viewModel()) {
+    vm.fetchById(productId)
+    val productState = vm.stateProduct//.collectAsState()
+    if(productState/*.value*/ == null){
+        Text("Nous recherchons votre produit")
+    }else
+      LazyColumn(modifier.fillMaxWidth()) {
         item{
-            Text(productId.toString(),style = Typography.headlineSmall)
-            Text("2800€",style = Typography.titleMedium)
+            Text(productState/*.value*/!!.title,style = Typography.headlineSmall)
+            Text("${productState/*.value*/!!.price}€",style = Typography.titleMedium)
             Text("ou 400€/mois")
             //Créer le reste
-            AsyncImage(model =
-            "https://static.fnac-static.com/multimedia/Images/FR/MDM/18/f1/52/22212888/3756-1/tsp20240308175104/Apple-iPhone-15-Pro-Max-6-7-5G-Double-SIM-256-Go-Natural-Titanium.jpg",
+            AsyncImage(model =productState/*.value*/!!.urlImage,
                 contentDescription = "Iphone 15 Pro Max",
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier.fillMaxWidth())
             Spacer(Modifier.padding(vertical = 8.dp))
             Text("Description",style= Typography.headlineMedium )
             Spacer(Modifier.padding(vertical = 8.dp))
-            Text("Ce téléphone vous permettre de vous dépasser avecun processeru ultra puissant et des photos éblouissantes. Avec ça finis les soirées tout seul au cinéma, maintenant vous avez plus de thunes pour y aller")
+            Text(productState/*.value*/!!.categorie)
             Spacer(Modifier.padding(vertical = 8.dp))
             Text("Caractéristiques",style= Typography.headlineMedium )
             Spacer(Modifier.padding(vertical = 8.dp))

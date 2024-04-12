@@ -1,4 +1,4 @@
-package com.eniecole.enishop
+package com.eniecole.enishop.bo
 
 data class Product(
     var id: Long = -1L,
